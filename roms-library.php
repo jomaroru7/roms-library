@@ -64,6 +64,19 @@ register_deactivation_hook( __FILE__, 'deactivate_roms_library' );
  */
 require plugin_dir_path( __FILE__ ) . 'includes/class-roms-library.php';
 
+// Register the custom post type "rom"
+function register_custom_post_type_rom() {
+    $args = array(
+        'public' => true, // If you want it to be public
+        'label'  => 'ROMs', // Plural label
+        'supports' => array('title', 'editor', 'thumbnail'), // Supported fields
+        'taxonomies' => array('category', 'post_tag'), // Associated taxonomies
+    );
+    register_post_type('rom', $args);
+}
+add_action('init', 'register_custom_post_type_rom');
+
+
 /**
  * Begins execution of the plugin.
  *
