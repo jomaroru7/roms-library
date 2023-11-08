@@ -15,4 +15,5 @@
 
 ### Added
 
+-   AuthenticatorDrive class for Google Drive authentication.
 -   Google Drive dependencies to composer.json.

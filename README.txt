@@ -20,4 +20,6 @@ This will have a frontal in React to do these jobs.
 
 - Download the plugin.
 
+- Install composer if you have not installed it before https://getcomposer.org/download/.
+
 - Execute `composer install`.
