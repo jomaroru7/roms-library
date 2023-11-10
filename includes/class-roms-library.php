@@ -98,7 +98,29 @@ class Roms_Library {
 	 * @access   private
 	 */
 	private function load_dependencies() {
+		
+		/**
+		 * The class responsible for orchestrating the actions and filters of the
+		 * core plugin.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/api/authentication/authenticator-drive.php';
 
+		/**
+		 * The class responsible for orchestrating the actions and filters of the
+		 * core plugin.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/api/connectors/connector-interface.php';
+		/**
+		 * The class responsible for orchestrating the actions and filters of the
+		 * core plugin.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/api/connectors/connector-drive.php';
+		/**
+		 * The class responsible for orchestrating the actions and filters of the
+		 * core plugin.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/api/roms-api.php';
+		
 		/**
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.

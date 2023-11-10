@@ -64,6 +64,8 @@ register_deactivation_hook( __FILE__, 'deactivate_roms_library' );
  */
 require plugin_dir_path( __FILE__ ) . 'includes/class-roms-library.php';
 
+require plugin_dir_path( __FILE__ ) .'vendor/autoload.php';
+
 // Register the custom post type "rom"
 function register_custom_post_type_rom() {
     $args = array(
@@ -75,6 +77,20 @@ function register_custom_post_type_rom() {
     register_post_type('rom', $args);
 }
 add_action('init', 'register_custom_post_type_rom');
+
+add_action( 'rest_api_init', function () {
+    register_rest_route( 'roms/v1', '/list', array(
+        'methods' => 'GET',
+        'callback' => 'roms_list',
+    ) );
+} );
+
+
+function roms_list(){
+    $api = new RomsApi();
+    $api->list();
+    var_dump($api->list());
+}
 
 
 /**

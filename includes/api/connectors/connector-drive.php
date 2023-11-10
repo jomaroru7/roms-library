@@ -1,17 +1,20 @@
 <?php
+
 class ConnectorDrive implements Connector{
 
     private $auth;
-    private $credentialsPath = '../auth-data/client_secret_435397659397-ruchckg1np6nhup16jqpok9q7t2jphbc.apps.googleusercontent.com.json';
+    private $credentialsPath;
     private $driveService;
 
     public function __construct() {
+        $this->credentialsPath = plugin_dir_path( dirname( __FILE__ ) ) .'auth-data/auth.json';
         $this->auth = new AuthenticatorDrive($this->credentialsPath);
         $this->authenticateIfAccessTokenExpires();
     }
     
     public function list(){
-        $files = $this->driveService->files->listFiles();
+        $files = $this->driveService;
+        // $files = $this->driveService->files->listFiles();
         // foreach ($files as $file) {
         //     echo $file->getName() . "<br>";
         // }

@@ -51,23 +51,6 @@ class Roms_Library_Public {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-
-		$this->create_actions();
-
-	}
-
-	public function create_actions(){
-		add_action( 'rest_api_init', function () {
-			register_rest_route( 'roms', '/', array(
-			  'methods' => 'GET',
-			  'callback' => 'roms_list',
-			) );
-		} );
-	}
-
-	public function roms_list(){
-		$api = new RomsApi();
-		return $api->list();
 	}
 
 	/**

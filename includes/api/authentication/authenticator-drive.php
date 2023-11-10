@@ -1,11 +1,11 @@
 <?php
-require 'vendor/autoload.php';
-
+use Google\Service\Drive;
 class AuthenticatorDrive {
     private $client;
 
     public function __construct($credentialsPath) {
         $this->client = new Google_Client();
+        $this->client->setRedirectUri('http://' . $_SERVER['HTTP_HOST'] . '/oauth2callback.php');
         $this->client->setAuthConfig($credentialsPath);
         $this->client->setAccessType('offline');
     }
@@ -15,7 +15,7 @@ class AuthenticatorDrive {
     }
 
     public function getDriveService() {
-        return new Google_Service_Drive($this->client);
+        return new Drive($this->client);
     }
 
     public function isAccessTokenExpired() {
