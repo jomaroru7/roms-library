@@ -1,13 +1,18 @@
 <?php
 use Google\Service\Drive;
+putenv('GOOGLE_APPLICATION_CREDENTIALS='.plugin_dir_path( dirname( __FILE__ ) ) .'auth-data/auth.json');
 class AuthenticatorDrive {
     private $client;
-
-    public function __construct($credentialsPath) {
+    public function __construct() {
         $this->client = new Google_Client();
-        $this->client->setRedirectUri('http://' . $_SERVER['HTTP_HOST'] . '/oauth2callback.php');
-        $this->client->setAuthConfig($credentialsPath);
-        $this->client->setAccessType('offline');
+ 
+        try {
+            $this->client->useApplicationDefaultCredentials();
+            $this->client->addScope(Google\Service\Drive::DRIVE);
+        } catch (Exception $e) {
+            echo 'Excepción capturada: ', $e->getMessage(), "\n";
+        }
+        
     }
 
     public function getClient() {
@@ -16,17 +21,5 @@ class AuthenticatorDrive {
 
     public function getDriveService() {
         return new Drive($this->client);
-    }
-
-    public function isAccessTokenExpired() {
-        return $this->client->isAccessTokenExpired();
-    }
-
-    public function getAuthorizationUrl() {
-        return $this->client->createAuthUrl();
-    }
-
-    public function fetchAccessTokenWithCode($code) {
-        return $this->client->fetchAccessTokenWithAuthCode($code);
     }
 }

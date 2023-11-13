@@ -88,8 +88,14 @@ add_action( 'rest_api_init', function () {
 
 function roms_list(){
     $api = new RomsApi();
-    $api->list();
-    var_dump($api->list());
+    $list = $api->list();
+    $arrayRoms=[];
+    foreach( $list as $key => $value ) {
+        if ('application/vnd.google-apps.folder' !== $value->mimeType){
+            array_push($arrayRoms, $value->name);
+        }
+    }
+    return $arrayRoms;
 }
 
 
