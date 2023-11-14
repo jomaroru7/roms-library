@@ -35,4 +35,8 @@ For access to wordpress api, you can do it from the path /wp-json/roms/v1/{funct
 
 - Execute `composer install`.
 
+- Go to folder public/front-roms-library.
+
+- Execute `npm install`.
+
 - Configure ACF fields (you can import from imports/acf-fields.json).
