@@ -15,6 +15,8 @@ With this plugin you can list, add, delete and show your roms in Google Drive.
 
 This will have a frontal in React to do these jobs.
 
+For access to wordpress api, you can do it from the path /wp-json/roms/v1/{function}
+
 
 == Dependencies ==
 

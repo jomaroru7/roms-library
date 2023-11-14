@@ -128,7 +128,6 @@ add_action( 'rest_api_init', function () {
     ) );
 } );
 
-
 function roms_list(){
     $api = new RomsApi();
     $list = $api->list();

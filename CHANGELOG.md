@@ -15,6 +15,7 @@
 
 ### Added
 
+-   Default logo for gba and nds.
 -   ACF fields json.
 -   Google Drive elements list.
 -   AuthenticatorDrive class for Google Drive authentication.
