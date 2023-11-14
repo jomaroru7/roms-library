@@ -2,6 +2,8 @@
   "name": "front-roms-library",
   "version": "0.1.0",
   "private": true,
+  "homepage": "wp-content/plugins/roms-library/public/front-roms-library/build/",
+  "type": "module",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -39,5 +41,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "react-app-rewired": "^2.2.1"
   }
 }

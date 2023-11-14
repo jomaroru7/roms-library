@@ -66,6 +66,19 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-roms-library.php';
 
 require plugin_dir_path( __FILE__ ) .'vendor/autoload.php';
 
+function load_react_app_shortcode() {
+    wp_enqueue_script('front-roms-library');
+    wp_enqueue_style('front-roms-library-css');
+    ob_start();
+    ?>
+    <div id="front-roms-library-container"></div>
+
+    <?php
+    return ob_get_clean();
+}
+add_shortcode('front_roms_library_shortcode', 'load_react_app_shortcode');
+
+
 // Register the custom post type "rom" with taxonomy "consola"
 function register_custom_post_type_rom() {
     $labels = array(

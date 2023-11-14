@@ -73,6 +73,7 @@ class Roms_Library_Public {
 		 */
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/roms-library-public.css', array(), $this->version, 'all' );
+		wp_register_style('front-roms-library-css', plugin_dir_url(__FILE__) . 'front-roms-library/build/static/css/main.f855e6bc.css', array(), '1.0', 'all');
 
 	}
 
@@ -96,7 +97,7 @@ class Roms_Library_Public {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/roms-library-public.js', array( 'jquery' ), $this->version, false );
-
+		wp_register_script('front-roms-library', plugin_dir_url(__FILE__) . 'front-roms-library/build/static/js/main.8b68a68a.js', array(), '1.0', true);
 	}
 
 }
