@@ -66,15 +66,51 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-roms-library.php';
 
 require plugin_dir_path( __FILE__ ) .'vendor/autoload.php';
 
-// Register the custom post type "rom"
+// Register the custom post type "rom" with taxonomy "consola"
 function register_custom_post_type_rom() {
-    $args = array(
-        'public' => true, // If you want it to be public
-        'label'  => 'ROMs', // Plural label
-        'supports' => array('title', 'editor', 'thumbnail'), // Supported fields
-        'taxonomies' => array('category', 'post_tag'), // Associated taxonomies
+    $labels = array(
+        'name'              => _x('ROMs', 'post type general name'),
+        'singular_name'     => _x('ROM', 'post type singular name'),
+        'add_new'           => __('Add New'),
+        'add_new_item'      => __('Add New ROM'),
+        'edit_item'         => __('Edit ROM'),
+        'new_item'          => __('New ROM'),
+        'all_items'         => __('All ROMs'),
+        'view_item'         => __('View ROM'),
+        'search_items'      => __('Search ROMs'),
+        'not_found'         => __('No ROMs found'),
+        'not_found_in_trash'=> __('No ROMs found in the Trash'),
+        'parent_item_colon' => '',
+        'menu_name'         => 'ROMs'
     );
+    
+    $args = array(
+        'labels'            => $labels,
+        'public'            => true,
+        'publicly_queryable'=> true,
+        'show_ui'           => true,
+        'show_in_menu'      => true,
+        'query_var'         => true,
+        'rewrite'           => array('slug' => 'rom'),
+        'capability_type'   => 'post',
+        'has_archive'       => true,
+        'hierarchical'      => false,
+        'menu_position'     => null,
+        'supports'          => array('title', 'editor', 'thumbnail'),
+        'taxonomies'        => array('console'), // Add the "consola" taxonomy
+    );
+    
     register_post_type('rom', $args);
+
+    register_taxonomy('console', 'rom', array(
+        'label' => 'Console',
+        'hierarchical' => true,
+        'public' => true,
+        'show_ui' => true,
+        'show_admin_column' => true,
+        'query_var' => true,
+        'rewrite' => array('slug' => 'console'),
+    ));
 }
 add_action('init', 'register_custom_post_type_rom');
 
@@ -85,8 +121,27 @@ add_action( 'rest_api_init', function () {
     ) );
 } );
 
+add_action( 'rest_api_init', function () {
+    register_rest_route( 'roms/v1', '/refresh', array(
+        'methods' => 'GET',
+        'callback' => 'roms_refresh',
+    ) );
+} );
+
 
 function roms_list(){
+    $api = new RomsApi();
+    $list = $api->list();
+    $arrayRoms=[];
+    foreach( $list as $key => $value ) {
+        if ('application/vnd.google-apps.folder' !== $value->mimeType){
+            array_push($arrayRoms, $value->name);
+        }
+    }
+    return $arrayRoms;
+}
+
+function roms_refresh(){
     $api = new RomsApi();
     $list = $api->list();
     $arrayRoms=[];

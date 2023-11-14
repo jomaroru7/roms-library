@@ -15,6 +15,7 @@
 
 ### Added
 
+-   ACF fields json.
 -   Google Drive elements list.
 -   AuthenticatorDrive class for Google Drive authentication.
 -   Google Drive dependencies to composer.json.
