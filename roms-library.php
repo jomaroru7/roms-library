@@ -137,16 +137,15 @@ add_action('rest_api_init', function () {
     register_rest_route('roms/v1', '/list', array(
         'methods' => 'GET',
         'callback' => 'roms_list',
+        'permission_callback' => '__return_true',
     ));
 });
 
-add_action('rest_api_init', function () {
-    register_rest_route('roms/v1', '/refresh', array(
-        'methods' => 'GET',
-        'callback' => 'roms_refresh',
-    ));
-});
-
+/**
+ * Callback for API rom_list.
+ *
+ * @return array
+ */
 function roms_list()
 {
     $api = new RomsApi();
@@ -154,25 +153,88 @@ function roms_list()
     $arrayRoms = [];
     foreach ($list as $key => $value) {
         if ('application/vnd.google-apps.folder' !== $value->mimeType) {
-            array_push($arrayRoms, $value->name);
+            [$name, $console] = explode('.',  $value->name);
+            array_push($arrayRoms, [$value->id, $name, strtoupper($console)]);
         }
     }
     return $arrayRoms;
 }
 
-function roms_refresh()
+/**
+ * Create a console.
+ *
+ * @param string $term Name of the console.
+ * @param string $slug Slug of the console.
+ * @param string $description Description of the console.
+ * @return void
+ */
+function add_console($term, $slug, $description)
 {
-    $api = new RomsApi();
-    $list = $api->list();
-    $arrayRoms = [];
-    foreach ($list as $key => $value) {
-        if ('application/vnd.google-apps.folder' !== $value->mimeType) {
-            array_push($arrayRoms, $value->name);
-        }
+    $args = array(
+        'description' => $description,
+        'slug' => $slug,
+        'parent' => 0,
+    );
+
+    $term_id = wp_insert_term($term, 'console', $args);
+
+    if (is_wp_error($term_id)) {
+        add_settings_error('roms_library_messages', 'roms_library_message', __('Can not create console', 'roms-library') . ' ' . $term , 'error');
+    } else {
+        add_settings_error('roms_library_messages', 'roms_library_message', __('Created console', 'roms-library') . ' ' . $term, 'success');
     }
-    return $arrayRoms;
 }
 
+/**
+ * Create a rom.
+ *
+ * @param string $term Rom name.
+ * @param string $description Rom description.
+ * @param string $console_name Rom console name.
+ * @param string $drive_id Google drive rom ID.
+ * @return WP_Error|string
+ */
+function add_rom($term, $description, $console_name, $drive_id)
+{
+    $args = array(
+        'post_title' => $term,
+        'post_content' => $description,
+        'post_status' => 'publish',
+        'post_type' => 'rom',
+    );
+
+    $term_id = wp_insert_post($args);
+    wp_set_object_terms($term_id, $console_name, 'console');
+    update_field('rom_drive_id', $drive_id, $term_id);
+
+    return $term_id;
+}
+
+/**
+ * Check if a rom is created.
+ *
+ * @param string $drive_id
+ * @return boolean
+ */
+function is_rom_created($drive_id){
+    $args = array(
+        'post_type' => 'rom',
+        'meta_query' => array(
+            array(
+                'key' => 'rom_drive_id',
+                'value' => $drive_id,
+                'compare' => '='
+            )
+        )
+    );
+    
+    $query = new WP_Query($args);
+    
+    if ($query->have_posts()) {
+        return true;        
+    }
+    return false;
+}
 
 /**
  * Begins execution of the plugin.

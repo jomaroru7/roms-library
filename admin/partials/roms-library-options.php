@@ -11,9 +11,6 @@
  * @subpackage Roms_Library/admin/partials
  */
 
-if ( isset( $_POST['submit'] ) ) {
-	include_once 'roms-library-refresh-roms.php';
-}
 ?>
 <div class="wrap">
 	<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
@@ -27,5 +24,7 @@ if ( isset( $_POST['submit'] ) ) {
 	</form>
 </div>
 
-
-<form action="<?php echo home_url() ?>/wp-json/roms/v1/refresh"></form>
+<?php 
+if ( isset( $_POST['submit'] ) ) {
+	include_once 'roms-library-refresh-roms.php';
+}

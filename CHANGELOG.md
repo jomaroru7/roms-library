@@ -15,6 +15,7 @@
 
 ### Added
 
+-   Refresh roms functionality.
 -   React project.
 -   Default logo for gba and nds.
 -   ACF fields json.
