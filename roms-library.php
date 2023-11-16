@@ -117,6 +117,7 @@ function register_custom_post_type_rom()
         'menu_position'     => null,
         'supports'          => array('title', 'editor', 'thumbnail'),
         'taxonomies'        => array('console'),
+        'show_in_rest'      => true,
     );
 
     register_post_type('rom', $args);
@@ -179,7 +180,7 @@ function add_console($term, $slug, $description)
     $term_id = wp_insert_term($term, 'console', $args);
 
     if (is_wp_error($term_id)) {
-        add_settings_error('roms_library_messages', 'roms_library_message', __('Can not create console', 'roms-library') . ' ' . $term , 'error');
+        add_settings_error('roms_library_messages', 'roms_library_message', __('Can not create console', 'roms-library') . ' ' . $term, 'error');
     } else {
         add_settings_error('roms_library_messages', 'roms_library_message', __('Created console', 'roms-library') . ' ' . $term, 'success');
     }
@@ -216,7 +217,8 @@ function add_rom($term, $description, $console_name, $drive_id)
  * @param string $drive_id
  * @return boolean
  */
-function is_rom_created($drive_id){
+function is_rom_created($drive_id)
+{
     $args = array(
         'post_type' => 'rom',
         'meta_query' => array(
@@ -227,11 +229,11 @@ function is_rom_created($drive_id){
             )
         )
     );
-    
+
     $query = new WP_Query($args);
-    
+
     if ($query->have_posts()) {
-        return true;        
+        return true;
     }
     return false;
 }
