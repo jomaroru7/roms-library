@@ -7,17 +7,23 @@ interface AddRomProps {
 
 export const AddRom: React.FC<AddRomProps> = ({ onNewRom }) => {
 
-  const [inputValue, setinputValue] = useState('');
+  const [inputValue, setInputValue] = useState('');
 
   const onInputChange = (event: FormEvent<HTMLInputElement>) => {
-    setinputValue(event.currentTarget.value);
+    setInputValue(event.currentTarget.value);
   }
 
   const onSubmit = (event: FormEvent) => {
     event.preventDefault();
     if (0 >= inputValue.trim().length) return;
-    onNewRom({romName: inputValue.trim()});
-    setinputValue('');
+    onNewRom({
+      id: 134,
+      title: inputValue.trim(),
+      description: '',
+      console: 'GBA',
+      image: ''
+    });
+    setInputValue('');
   }
 
   return (

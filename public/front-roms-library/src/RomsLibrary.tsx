@@ -6,10 +6,10 @@ import { RomGrid } from "./components/RomGrid/RomGrid";
 
 export const RomsLibrary = () => {
 
-  const [roms, setRoms] = useState<Array<Rom>>([{ romName: 'Final fantasy' }, { romName: 'Pokemon rojo' }]);
+  const [roms, setRoms] = useState<Array<Rom>>([]);
 
   const onNewRom = (newRom: Rom) => {
-    if (roms.find((rom) => newRom.romName.toLowerCase() === rom.romName.toLowerCase())) return;
+    if (roms.find((rom) => newRom.title.toLowerCase() === rom.title.toLowerCase())) return;
     setRoms([...roms, newRom]);
   }
 
@@ -24,8 +24,8 @@ export const RomsLibrary = () => {
           roms.map((rom) => {
             return (
               <RomGrid 
-                key={rom.romName} 
-                romName = {rom.romName}
+                key={rom.id.toString()} 
+                romName = {rom.title}
               />
             )
           })
