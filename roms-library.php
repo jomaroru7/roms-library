@@ -130,6 +130,7 @@ function register_custom_post_type_rom()
         'show_admin_column' => true,
         'query_var' => true,
         'rewrite' => array('slug' => 'console'),
+        'show_in_rest' => true,
     ));
 }
 add_action('init', 'register_custom_post_type_rom');
