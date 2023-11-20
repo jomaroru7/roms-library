@@ -13,7 +13,6 @@ export const getConsoles = async () => {
             image: false !== console.acf.console_image ? console.acf.console_image : getImageBySlug(console.slug),
         }
     })
-    console.log(consoles)
     return consoles;
 }
 

@@ -9,7 +9,6 @@ export const getRoms = async () => {
     const roms = data.map((rom: PostRom) => {
         const romConsoleId = rom.console[0];
         const romConsoleImage = false !== rom.acf.rom_image ? rom.acf.rom_image : getConsoleById(romConsoleId, consoles);
-        console.log(romConsoleImage);
         return {
             id: rom.id,
             title: rom.title.rendered,
