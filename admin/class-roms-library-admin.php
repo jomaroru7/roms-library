@@ -51,7 +51,6 @@ class Roms_Library_Admin {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-
 	}
 
 	/**
@@ -100,4 +99,37 @@ class Roms_Library_Admin {
 
 	}
 
+	public function roms_library_settings_init(){
+		register_setting(ROMS_LIBRARY_URI, 'roms-library-options');
+
+		add_settings_section(
+			'roms-library-options-section-main',
+			__( 'Roms library options', ROMS_LIBRARY_URI ),
+			array( $this, 'roms_library_section_main_callback' ),
+			ROMS_LIBRARY_URI
+		);
+	}
+
+	/**
+	 * Main section callback function.
+	 */
+	public function roms_library_section_main_callback() {
+		require_once 'partials/roms-library-section-main.php';
+	}
+
+
+	public function add_menu_page_rom() {
+		add_submenu_page(
+			'edit.php?post_type=rom',
+			'Options',
+			'Options',
+			'manage_options',
+			'rom-options',
+			array($this, 'option_menu_page'),
+		);
+	}
+	
+	public function option_menu_page() {
+		require_once plugin_dir_path( __FILE__ ) .'partials/roms-library-options.php';
+	}
 }

@@ -8,6 +8,10 @@
 
         public function list(){
             $list = $this->connector->list();
+
+            // foreach ( $list as $key => $value) {
+            //     echo "<h1>{$value}</h1>";
+            // }
             // Add stuff
             return $list;
         }   

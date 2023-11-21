@@ -51,23 +51,6 @@ class Roms_Library_Public {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-
-		$this->create_actions();
-
-	}
-
-	public function create_actions(){
-		add_action( 'rest_api_init', function () {
-			register_rest_route( 'roms', '/', array(
-			  'methods' => 'GET',
-			  'callback' => 'roms_list',
-			) );
-		} );
-	}
-
-	public function roms_list(){
-		$api = new RomsApi();
-		return $api->list();
 	}
 
 	/**
@@ -90,6 +73,10 @@ class Roms_Library_Public {
 		 */
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/roms-library-public.css', array(), $this->version, 'all' );
+		$directory = plugin_dir_path(__FILE__) . 'front-roms-library/build/static/css';
+		$pattern = '/main\.([a-f0-9]+)\.css$/';
+		$filename= $this->get_filename_from_regex($directory, $pattern);
+		wp_register_style('front-roms-library-css', plugin_dir_url(__FILE__) . 'front-roms-library/build/static/css/'.$filename, array(), '1.0', 'all');
 
 	}
 
@@ -113,7 +100,18 @@ class Roms_Library_Public {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/roms-library-public.js', array( 'jquery' ), $this->version, false );
-
+		$directory = plugin_dir_path(__FILE__) . 'front-roms-library/build/static/js';
+		$pattern = '/main\.([a-f0-9]+)\.js$/';
+		$filename= $this->get_filename_from_regex($directory, $pattern);
+		wp_register_script('front-roms-library', plugin_dir_url(__FILE__) . 'front-roms-library/build/static/js/'.$filename, array(), '1.0', true);
 	}
-
+	
+	private function get_filename_from_regex($plugin_directory, $pattern) {
+		$files = scandir($plugin_directory);
+		foreach ($files as $file) {
+			if (preg_match($pattern, $file, $matches)) {
+				return $file;
+			}
+		}
+	}
 }
