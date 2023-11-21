@@ -22,7 +22,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "gulp": "./node_modules/.bin/gulp"
   },
   "eslintConfig": {
     "extends": [
@@ -43,6 +44,10 @@
     ]
   },
   "devDependencies": {
-    "react-app-rewired": "^2.2.1"
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^9.0.0",
+    "gulp-sass": "^5.1.0",
+    "react-app-rewired": "^2.2.1",
+    "sass": "^1.69.5"
   }
 }

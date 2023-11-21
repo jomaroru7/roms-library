@@ -1,17 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AddRom } from './components/AddRom/AddRom';
 import { Rom } from "./types";
-import { RomGrid } from "./components/RomGrid/RomGrid";
+import { RomsGrid } from "./components/RomsGrid/RomsGrid";
+import { getRoms } from "./helpers/getRoms";
 
 
 export const RomsLibrary = () => {
 
-  const [roms, setRoms] = useState<Array<Rom>>([]);
+  const [roms, setRoms] = useState<Rom[]>([]);
 
   const onNewRom = (newRom: Rom) => {
     if (roms.find((rom) => newRom.title.toLowerCase() === rom.title.toLowerCase())) return;
     setRoms([...roms, newRom]);
   }
+
+  const getNewRoms = async() => {
+      const newRoms = await getRoms();
+      setRoms(newRoms);
+  }
+
+  useEffect(() => {
+      getNewRoms();
+  }, []);
 
   return (
     <>
@@ -20,17 +30,7 @@ export const RomsLibrary = () => {
         onNewRom={(value) => onNewRom(value)}
       />
       <ol>
-        {
-          roms.map((rom) => {
-            return (
-              <RomGrid 
-                key={rom.id.toString()} 
-                romName = {rom.title}
-              />
-            )
-          })
-        }
-
+        <RomsGrid roms={roms} />
       </ol>
 
     </>
