@@ -8,14 +8,14 @@ const autoprefixer = require( 'gulp-autoprefixer' );
 
 function styles() {
 	return gulp
-		.src( '.sass/**/*.scss' )
+		.src( './src/**/*.scss' )
 		.pipe( sass().on( 'error', sass.logError ) )
 		.pipe( autoprefixer() )
 		.pipe(gulp.dest( '.css'))
 }
 
 function watch() {
-	gulp.watch( `./sass/**/*.scss`, gulp.series( styles ) );
+	gulp.watch( `./src/**/*.scss`, gulp.series( styles ) );
 }
 
 exports.styles = styles;
