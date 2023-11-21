@@ -12,5 +12,5 @@ export const getConsole = async (consoleId: number) => {
 }
 
 const getImageBySlug = (slug: string) => {
-    return process.env.PUBLIC_URL + '/' + slug + '.png'
+    return process.env.PUBLIC_URL + '/' + slug + '.jpg'
 }

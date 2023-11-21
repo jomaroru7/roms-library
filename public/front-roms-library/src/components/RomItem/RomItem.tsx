@@ -1,21 +1,29 @@
+import { generateRandomColor } from '../../helpers/generateRandomColor';
+import { sanitizeString } from '../../helpers/sanitizeString';
 interface RomItemProps {
-    title: string,
-    description: string,
-    image: string
+  id: number
+  title: string,
+  description: string,
+  image: string
 }
 
-export const RomItem: React.FC<RomItemProps> = ({ title, description, image}) => {
+export const RomItem: React.FC<RomItemProps> = ({ id, title, description, image }) => {
   const backgroundImage = {
-    backgroundImage: "url("+image+")",
+    backgroundImage: "url(" + image + ")",
   }
+
+  const buttonBackgroundColor ={
+    backgroundColor: generateRandomColor(),
+
+  }
+  console.log(title)
+  console.log(<>{title}</>)
   return (
     <div className="rom-card">
-        <h2>{title}</h2>
-        <p>{description}</p>
-        <span>Hover here</span>
-        <div className="pic" style={backgroundImage}></div>
-        {/* <img alt={title} src={image}/> */}
-        <button></button>
+      <h2>{sanitizeString(title)}</h2>
+      <p>{sanitizeString(description)}</p>
+      <div className="pic" style={backgroundImage}></div>
+      <button style={buttonBackgroundColor}></button>
     </div>
   )
 }

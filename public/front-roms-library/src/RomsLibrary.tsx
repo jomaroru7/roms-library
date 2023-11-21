@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { AddRom } from './components/AddRom/AddRom';
+// import { AddRom } from './components/AddRom/AddRom';
 import { Rom } from "./types";
 import { RomsGrid } from "./components/RomsGrid/RomsGrid";
 import { getRoms } from "./helpers/getRoms";
@@ -9,10 +9,10 @@ export const RomsLibrary = () => {
 
   const [roms, setRoms] = useState<Rom[]>([]);
 
-  const onNewRom = (newRom: Rom) => {
-    if (roms.find((rom) => newRom.title.toLowerCase() === rom.title.toLowerCase())) return;
-    setRoms([...roms, newRom]);
-  }
+  // const onNewRom = (newRom: Rom) => {
+  //   if (roms.find((rom) => newRom.title.toLowerCase() === rom.title.toLowerCase())) return;
+  //   setRoms([...roms, newRom]);
+  // }
 
   const getNewRoms = async() => {
       const newRoms = await getRoms();
@@ -25,13 +25,11 @@ export const RomsLibrary = () => {
 
   return (
     <>
-      <h1>Roms Library</h1>
-      <AddRom
+      {/* <AddRom
         onNewRom={(value) => onNewRom(value)}
-      />
-      <ol>
-        <RomsGrid roms={roms} />
-      </ol>
+      /> */}
+
+      <RomsGrid roms={roms} />
 
     </>
   );
