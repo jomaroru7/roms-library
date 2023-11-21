@@ -16,8 +16,7 @@ export const RomItem: React.FC<RomItemProps> = ({ id, title, description, image 
     backgroundColor: generateRandomColor(),
 
   }
-  console.log(title)
-  console.log(<>{title}</>)
+
   return (
     <div className="rom-card">
       <h2>{sanitizeString(title)}</h2>

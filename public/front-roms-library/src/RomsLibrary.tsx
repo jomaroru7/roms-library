@@ -6,7 +6,6 @@ import { getRoms } from "./helpers/getRoms";
 
 
 export const RomsLibrary = () => {
-
   const [roms, setRoms] = useState<Rom[]>([]);
 
   // const onNewRom = (newRom: Rom) => {

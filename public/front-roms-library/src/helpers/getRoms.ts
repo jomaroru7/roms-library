@@ -1,8 +1,9 @@
 import { Console, PostRom } from '../types';
+import { getApiHost } from './getApiHost';
 import { getConsoles } from "./getConsoles";
 
 export const getRoms = async () => {
-    const url = 'https://loc-www.jomaroru.es/wp-json/wp/v2/rom/?acf_format=standard'
+    const url = getApiHost() + '/wp-json/wp/v2/rom/?acf_format=standard'
     const resp = await fetch(url);
     const data = await resp.json();
     const consoles: Console[] = await getArrayConsolesImage();
@@ -32,6 +33,6 @@ const getArrayConsolesImage = async () => {
 }
 
 const getConsoleById = (id: number, arrayConsoles: Console[]) => {
-    const console=  arrayConsoles.find((console) => id === console.id );
+    const console = arrayConsoles.find((console) => id === console.id);
     return console?.image;
 }

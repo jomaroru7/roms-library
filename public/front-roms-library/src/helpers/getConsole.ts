@@ -1,5 +1,7 @@
+import { getApiHost } from "./getApiHost";
+
 export const getConsole = async (consoleId: number) => {
-    const url = 'https://loc-www.jomaroru.es/wp-json/wp/v2/console/'+consoleId;
+    const url = getApiHost()+'/wp-json/wp/v2/console/'+consoleId;
     const resp = await fetch(url);
     const console = await resp.json();
     return {

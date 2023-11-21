@@ -1,7 +1,8 @@
 import { PostConsole } from "../types";
+import { getApiHost } from "./getApiHost";
 
 export const getConsoles = async () => {
-    const url = 'https://loc-www.jomaroru.es/wp-json/wp/v2/console/?acf_format=standard'
+    const url = getApiHost() + '/wp-json/wp/v2/console/?acf_format=standard'
     const resp = await fetch(url);
     const data = await resp.json();
     const consoles = data.map((console: PostConsole) => {
