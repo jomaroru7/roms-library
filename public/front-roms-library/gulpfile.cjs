@@ -1,17 +1,14 @@
 /*jshint -W097, node:true*/
-'use strict';
 
 const gulp = require( 'gulp' );
-const sass = require( 'gulp-sass' );
-const autoprefixer = require( 'gulp-autoprefixer' );
+const sass = require( 'gulp-sass' )(require('sass'));
 
 
 function styles() {
 	return gulp
 		.src( './src/**/*.scss' )
 		.pipe( sass().on( 'error', sass.logError ) )
-		.pipe( autoprefixer() )
-		.pipe(gulp.dest( '.css'))
+		.pipe(gulp.dest( './src'))
 }
 
 function watch() {
