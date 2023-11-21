@@ -5,11 +5,17 @@ interface RomItemProps {
 }
 
 export const RomItem: React.FC<RomItemProps> = ({ title, description, image}) => {
+  const backgroundImage = {
+    backgroundImage: "url("+image+")",
+  }
   return (
     <div className="rom-card">
-        <h3>{title}</h3>
+        <h2>{title}</h2>
         <p>{description}</p>
-        <img alt={title} src={image}/>
+        <span>Hover here</span>
+        <div className="pic" style={backgroundImage}></div>
+        {/* <img alt={title} src={image}/> */}
+        <button></button>
     </div>
   )
 }
