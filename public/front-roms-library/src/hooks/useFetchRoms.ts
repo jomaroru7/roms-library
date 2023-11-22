@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getRoms } from "../helpers/getRoms";
+import { getRoms } from "../helpers";
 import { Rom, getRomsArgs } from "../types";
 
 export const useFetchRoms = () => {

@@ -1,6 +1,5 @@
 import { Console, PostRom, getRomsArgs } from '../types';
-import { getApiHost } from './getApiHost';
-import { getConsoles } from "./getConsoles";
+import { getConsoles, getApiHost} from "./";
 
 export const getRoms = async ({search, page, videoconsole}: getRomsArgs = {}) => {
     const consoles: Console[] = await getArrayConsolesImage();

@@ -1,5 +1,5 @@
 import { Rom } from "../../types";
-import { RomItem } from "../RomItem/RomItem";
+import { RomItem } from "../";
 
 interface RomsGridProps {
     roms: Rom[]

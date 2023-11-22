@@ -1,7 +1,6 @@
 // import { AddRom } from './components/AddRom/AddRom';
-import { LoadingSpinner } from "./components/LoadingSpinner/LoadingSpinner";
-import { RomsGrid } from "./components/RomsGrid/RomsGrid";
-import { useFetchRoms } from "./hooks/useFetchRoms";
+import { RomsGrid, LoadingSpinner } from "./components";
+import { useFetchRoms } from "./hooks";
 
 
 export const RomsLibrary = () => {
@@ -20,7 +19,7 @@ export const RomsLibrary = () => {
       /> */}
 
       {
-        isLoading ? <LoadingSpinner/> : null
+        isLoading && <LoadingSpinner/>
       }
       
       <RomsGrid roms={roms} />

@@ -1,4 +1,4 @@
-import { getApiHost } from "./getApiHost";
+import { getApiHost } from "./";
 
 export const getConsole = async (consoleId: number) => {
     const url = getApiHost()+'/wp-json/wp/v2/console/'+consoleId;

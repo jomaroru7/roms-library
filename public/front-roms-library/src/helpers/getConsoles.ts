@@ -1,5 +1,5 @@
 import { PostConsole } from "../types";
-import { getApiHost } from "./getApiHost";
+import { getApiHost } from "./";
 
 export const getConsoles = async () => {
     // TODO - In the future could be more than 10 consoles. Control pagination.
