@@ -1,5 +1,10 @@
 export type OnNewRom = (newRom: Rom) => void;
 
+export interface getRomsArgs {
+    search?: string,
+    page?: number, 
+    videoconsole?: string
+}
 export interface PostRom {
     acf: {
         rom_download_link : string,
