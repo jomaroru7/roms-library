@@ -2,6 +2,7 @@ import { PostConsole } from "../types";
 import { getApiHost } from "./getApiHost";
 
 export const getConsoles = async () => {
+    // TODO - In the future could be more than 10 consoles. Control pagination.
     const url = getApiHost() + '/wp-json/wp/v2/console/?acf_format=standard'
     const resp = await fetch(url);
     const data = await resp.json();
