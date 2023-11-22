@@ -2,11 +2,22 @@ import { Console, PostRom } from '../types';
 import { getApiHost } from './getApiHost';
 import { getConsoles } from "./getConsoles";
 
-export const getRoms = async () => {
-    const url = getApiHost() + '/wp-json/wp/v2/rom/?acf_format=standard'
+interface getRomsArgs {
+    search?: string,
+    page?: number, 
+    videoconsole?: string
+}
+
+export const getRoms = async ({search, page, videoconsole}: getRomsArgs = {}) => {
+    const consoles: Console[] = await getArrayConsolesImage();
+    const consoleFilter: number | undefined = videoconsole ? getConsoleIdByName(videoconsole, consoles) : undefined;
+    const parameters = '?acf_format=standard' +
+        (page ? '&page=' + page : '') +
+        (consoleFilter ? '&console=' + consoleFilter : '') +
+        (search ? '&search=' + search : '');
+    const url = getApiHost() + '/wp-json/wp/v2/rom/' + parameters;
     const resp = await fetch(url);
     const data = await resp.json();
-    const consoles: Console[] = await getArrayConsolesImage();
     const roms = data.map((rom: PostRom) => {
         const romConsoleId = rom.console[0];
         const romConsoleImage = false !== rom.acf.rom_image ? rom.acf.rom_image : getConsoleById(romConsoleId, consoles);
@@ -26,6 +37,7 @@ const getArrayConsolesImage = async () => {
     const cons = consoles.map((console: Console) => {
         return {
             id: console.id,
+            name: console.name,
             image: console.image,
         }
     })
@@ -33,6 +45,11 @@ const getArrayConsolesImage = async () => {
 }
 
 const getConsoleById = (id: number, arrayConsoles: Console[]) => {
-    const console = arrayConsoles.find((console) => id === console.id);
-    return console?.image;
+    const videoconsole = arrayConsoles.find((videoconsole) => id === videoconsole.id);
+    return videoconsole?.image;
+}
+
+const getConsoleIdByName = (consoleName: string, arrayConsoles: Console[]) => {
+    const videoconsole = arrayConsoles.find((videoconsole) => consoleName.toLowerCase() === videoconsole.name.toLowerCase());
+    return videoconsole?.id;
 }
