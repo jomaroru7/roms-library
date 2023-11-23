@@ -1,5 +1,5 @@
 // import { AddRom } from './components/AddRom/AddRom';
-import { RomsGrid, LoadingSpinner } from "./components";
+import { RomsGrid, LoadingSpinner, RomsFilter } from "./components";
 import { useFetchRoms } from "./hooks";
 
 
@@ -17,6 +17,7 @@ export const RomsLibrary = () => {
       {/* <AddRom
         onNewRom={(value) => onNewRom(value)}
       /> */}
+      <RomsFilter getNewRoms={getNewRoms}/>
 
       {
         isLoading && <LoadingSpinner/>

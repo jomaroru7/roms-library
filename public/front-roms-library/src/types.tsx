@@ -1,7 +1,9 @@
 export type OnNewRom = (newRom: Rom) => void;
+export type GetNewRoms = (getRomsArgs: getRomsArgs) => void;
+export type OnSetVideoconsole = (videoconsole: string) => void;
 
 export interface getRomsArgs {
-    search?: string,
+    term?: string,
     page?: number, 
     videoconsole?: string
 }
@@ -44,7 +46,7 @@ export interface Rom {
     image: string,
 }
 
-export interface Console {
+export interface Videoconsole {
     image?: string | false,
     description: string,
     id: number,

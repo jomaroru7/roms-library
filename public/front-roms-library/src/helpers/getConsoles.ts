@@ -1,12 +1,12 @@
-import { PostConsole } from "../types";
+import { Videoconsole, PostConsole } from "../types";
 import { getApiHost } from "./";
 
-export const getConsoles = async () => {
+export const getConsoles = async() => {
     // TODO - In the future could be more than 10 consoles. Control pagination.
     const url = getApiHost() + '/wp-json/wp/v2/console/?acf_format=standard'
     const resp = await fetch(url);
     const data = await resp.json();
-    const consoles = data.map((console: PostConsole) => {
+    const consoles: Videoconsole[] = data.map((console: PostConsole) => {
         return {
             id: console.id,
             name: console.name,
@@ -15,6 +15,7 @@ export const getConsoles = async () => {
             image: false !== console.acf.console_image ? console.acf.console_image : getImageBySlug(console.slug),
         }
     })
+    
     return consoles;
 }
 
