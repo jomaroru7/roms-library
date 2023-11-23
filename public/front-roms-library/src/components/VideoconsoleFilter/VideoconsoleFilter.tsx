@@ -1,24 +1,30 @@
-import { Videoconsole, OnSetVideoconsole } from "../../types";
+import { useState } from "react";
+import { OnSwitchVideoconsolesSelected, Videoconsole } from "../../types"
 
 interface VideoconsoleFilterProps {
-    arrayVideoconsoles?: Videoconsole[],
-    onSetVideoconsole: OnSetVideoconsole,
+    videoconsole: Videoconsole,
+    onSwitchVideoconsolesSelected: OnSwitchVideoconsolesSelected
 }
 
-export const VideoconsoleFilter: React.FC<VideoconsoleFilterProps> = ({arrayVideoconsoles}, onSetVideoconsole) => {
-    console.log(arrayVideoconsoles);
+export const VideoconsoleFilter: React.FC<VideoconsoleFilterProps> = ({videoconsole, onSwitchVideoconsolesSelected}) => {
+
+    const [inputChecked, setInputChecked] = useState<boolean>(true);
+
+    const onInputChange = () => {
+        setInputChecked(!inputChecked);
+        onSwitchVideoconsolesSelected(videoconsole, inputChecked);
+    }
 
     return (
-        <div>
-            {
-                arrayVideoconsoles?.map(({name, id}) => (
-                    <>
-                        <label htmlFor={name}>{name}</label>
-                        <input key={id} type="checkbox" name={name} id={id.toString()} />
-                    </>
-                        
-                ))
-            }
-        </div>
+        <>
+            <label htmlFor={videoconsole.slug}>{videoconsole.name}</label>
+            <input 
+                type="checkbox" 
+                name={videoconsole.name} 
+                id={videoconsole.slug}  
+                onChange={onInputChange}
+                checked={inputChecked}
+                />
+        </>
     )
 }

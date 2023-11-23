@@ -6,7 +6,7 @@ export const useFilterRoms = () => {
     const [term, setTerm] = useState<string>();
     const [videoconsole, setVideoconsole] = useState<string>();
     const [page, setPage] = useState<number>();
-    const [arrayVideoconsoles, setArrayVideoconsoles] = useState<Videoconsole[]>();
+    const [arrayVideoconsoles, setArrayVideoconsoles] = useState<Videoconsole[]>([]);
 
     const setFilters = ({ term, videoconsole, page }: getRomsArgs) => {
         term && setTerm(term);

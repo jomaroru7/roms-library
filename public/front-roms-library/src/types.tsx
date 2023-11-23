@@ -1,6 +1,7 @@
 export type OnNewRom = (newRom: Rom) => void;
 export type GetNewRoms = (getRomsArgs: getRomsArgs) => void;
 export type OnSetVideoconsole = (videoconsole: string) => void;
+export type OnSwitchVideoconsolesSelected = (videoconsole: Videoconsole, isConsoleFiltered: boolean) => void;
 
 export interface getRomsArgs {
     term?: string,
