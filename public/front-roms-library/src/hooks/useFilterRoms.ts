@@ -1,36 +1,42 @@
 import { useEffect, useState } from "react"
-import { Videoconsole, getRomsArgs } from "../types";
+import { Videoconsole } from "../types";
 import { getConsoles } from "../helpers";
 
-export const useFilterRoms = () => {
-    const [term, setTerm] = useState<string>();
-    const [videoconsoles, setVideoconsoles] = useState<Videoconsole[]>();
-    const [page, setPage] = useState<number>();
-    const [arrayVideoconsoles, setArrayVideoconsoles] = useState<Videoconsole[]>([]);
+interface setFiltersArgs {
+    termFilter?: string,
+    videoconsolesFilter?: Videoconsole[],
+    pageFilter?: number
+}
 
-    const setFilters = ({ term, videoconsoles, page }: getRomsArgs) => {
-        term && setTerm(term);
-        videoconsoles && setVideoconsoles(videoconsoles);
-        page && setPage(page);
+export const useFilterRoms = () => {
+    const [termFilter, setTermFilter] = useState<string>();
+    const [videoconsolesFilter, setVideoconsolesFilter] = useState<Videoconsole[]>();
+    const [pageFilter, setPageFilter] = useState<number>();
+    const [videoconsoles, setVideoconsoles] = useState<Videoconsole[]>([]);
+
+    const setFilters = ({ termFilter, videoconsolesFilter, pageFilter }: setFiltersArgs) => {
+        termFilter && setTermFilter(termFilter);
+        videoconsolesFilter && setVideoconsolesFilter(videoconsolesFilter);
+        pageFilter && setPageFilter(pageFilter);
     }
 
     const resetFilters = (filters?: string[]) => {
-        (!filters || filters.find((filter) => 'term' === filter)) && setTerm(undefined);
-        (!filters || filters.find((filter) => 'videoconsole' === filter)) && setVideoconsoles(undefined);
-        (!filters || filters.find((filter) => 'page' === filter)) && setPage(undefined);
+        (!filters || filters.find((filter) => 'term' === filter)) && setTermFilter(undefined);
+        (!filters || filters.find((filter) => 'videoconsole' === filter)) && setVideoconsolesFilter(undefined);
+        (!filters || filters.find((filter) => 'page' === filter)) && setPageFilter(undefined);
     }
 
     useEffect(()=>{
         getConsoles()
-            .then( (videoconsoles) => setArrayVideoconsoles(videoconsoles));
+            .then( (videoconsoles) => setVideoconsoles(videoconsoles));
     }, [])
 
     return (
         {
-            term,
             videoconsoles,
-            page,
-            arrayVideoconsoles,
+            termFilter,
+            videoconsolesFilter,
+            pageFilter,
             setFilters,
             resetFilters
         }

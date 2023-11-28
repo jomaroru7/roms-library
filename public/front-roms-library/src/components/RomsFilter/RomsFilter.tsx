@@ -8,26 +8,27 @@ interface RomsFilterProps {
 }
 
 export const RomsFilter: React.FC<RomsFilterProps> = ({ getNewRoms }) => {
-    const { term, videoconsoles, page, arrayVideoconsoles,  setFilters, resetFilters } = useFilterRoms();
+    const { termFilter, videoconsolesFilter, pageFilter, videoconsoles,  setFilters, resetFilters } = useFilterRoms();
 
-    const onSetVideoconsole = (videoconsoles: Videoconsole[]) => {
-        setFilters({ videoconsoles })
+    const onSetVideoconsole = (arrayVideoconsoles: Videoconsole[]) => {
+        setFilters({ videoconsolesFilter: arrayVideoconsoles })
     }
     
     const onSetTerm = (term: string) => {
-        setFilters({ term })
+        setFilters({ termFilter: term })
     }
 
     const onSetPage = (page: number) => {
-        setFilters({ page })
+        setFilters({ pageFilter: page })
     }
 
     const onSubmit = (event: FormEvent) => {
         event.preventDefault();
         const args = {
-            term,
             videoconsoles,
-            page
+            termFilter,
+            videoconsolesFilter,
+            pageFilter
         };
         getNewRoms(args);
     }
@@ -37,7 +38,7 @@ export const RomsFilter: React.FC<RomsFilterProps> = ({ getNewRoms }) => {
             <form className="roms-filter-form" onSubmit={onSubmit}>
                 <div className="videoconsole-filter-container">
                     <h2 className="videoconsole-title">Videoconsole</h2>
-                    <VideoconsoleFilterGrid arrayVideoconsoles={arrayVideoconsoles} onSetVideoconsole={onSetVideoconsole} />
+                    <VideoconsoleFilterGrid arrayVideoconsoles={videoconsoles} onSetVideoconsole={onSetVideoconsole} />
                 </div>
                 <input className="roms-filter-submit" type="submit" value="Search" />
             </form>

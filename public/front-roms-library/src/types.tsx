@@ -4,9 +4,10 @@ export type OnSetVideoconsole = (videoconsole: Videoconsole[]) => void;
 export type OnSwitchVideoconsolesSelected = (videoconsole: Videoconsole, isConsoleFiltered: boolean) => void;
 
 export interface getRomsArgs {
-    term?: string,
-    page?: number, 
-    videoconsoles?: Videoconsole[]
+    videoconsoles: Videoconsole[],  
+    termFilter?: string,
+    pageFilter?: number, 
+    videoconsolesFilter?: Videoconsole[]
 }
 export interface PostRom {
     acf: {

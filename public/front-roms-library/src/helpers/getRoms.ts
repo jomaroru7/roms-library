@@ -1,19 +1,18 @@
 import { Videoconsole, PostRom, getRomsArgs } from '../types';
-import { getConsoles, getApiHost } from "./";
+import { getApiHost } from "./";
 
-export const getRoms = async ({ term: search, page, videoconsoles }: getRomsArgs = {}) => {
-    const consoles: Videoconsole[] = await getArrayConsoles();
-    const consoleFilter: string | undefined = videoconsoles ? getConsolesIdsForQuery(videoconsoles, consoles) : undefined;
+export const getRoms = async ({ videoconsoles, termFilter: searchFilter, pageFilter, videoconsolesFilter }: getRomsArgs = {videoconsoles: []}) => {
+    const consoleFilter: string | undefined = videoconsolesFilter ? getConsolesIdsForQuery(videoconsolesFilter, videoconsoles) : undefined;
     const parameters = '?acf_format=standard' +
-        (page ? '&page=' + page : '') +
+        (pageFilter ? '&page=' + pageFilter : '') +
         (consoleFilter ? '&console=' + consoleFilter : '') +
-        (search ? '&search=' + search : '');
+        (searchFilter ? '&search=' + searchFilter : '');
     const url = getApiHost() + '/wp-json/wp/v2/rom/' + parameters;
     const resp = await fetch(url);
     const data = await resp.json();
     const roms = data.map((rom: PostRom) => {
         const romConsoleId = rom.console[0];
-        const romConsoleImage = false !== rom.acf.rom_image ? rom.acf.rom_image : getConsoleById(romConsoleId, consoles);
+        const romConsoleImage = false !== rom.acf.rom_image ? rom.acf.rom_image : getConsoleImageById(romConsoleId, videoconsoles);
         return {
             id: rom.id,
             title: rom.title.rendered,
@@ -25,11 +24,7 @@ export const getRoms = async ({ term: search, page, videoconsoles }: getRomsArgs
     return roms;
 }
 
-const getArrayConsoles = async () => {
-    return await getConsoles();
-}
-
-const getConsoleById = (id: number, arrayConsoles: Videoconsole[]) => {
+const getConsoleImageById = (id: number, arrayConsoles: Videoconsole[]) => {
     const videoconsole = arrayConsoles.find((videoconsole) => id === videoconsole.id);
     return videoconsole?.image;
 }

@@ -14,7 +14,7 @@
 ## Unreleased
 
 ### Changed
-
+-   Reformed getRoms to reduce getConsoles calls.
 -   Filters css adjust.
 
 ## [1.0] 28-11-2023
