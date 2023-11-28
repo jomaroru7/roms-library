@@ -34,7 +34,7 @@ body {
   text-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
 .rom-card p {
-  z-index: 99;
+  z-index: 10;
   position: absolute;
   bottom: 30px;
   right: 130px;
@@ -47,7 +47,7 @@ body {
   transition: 0.2s ease;
 }
 .rom-card span {
-  z-index: 99;
+  z-index: 10;
   position: absolute;
   top: 60px;
   right: 35px;
@@ -99,7 +99,6 @@ body {
 @media (max-width: 768px) {
   .rom-card {
     width: 100%;
-    margin-right: 40px;
   }
   .rom-card button {
     transform: scale(16.5);
@@ -214,10 +213,16 @@ body {
 }
 .roms-filter-container .roms-filter-form {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 100%;
   justify-content: space-evenly;
   align-items: center;
+  padding: 10px 0;
+}
+@media (min-width: 768px) {
+  .roms-filter-container .roms-filter-form {
+    flex-direction: row;
+  }
 }
 .roms-filter-container .roms-filter-form .roms-filter-submit {
   padding: 10px 20px;
@@ -236,9 +241,15 @@ body {
 .roms-filter-container .roms-filter-form .roms-filter-submit:hover {
   box-shadow: 0 0 5px #000, 0 0 20px #000;
 }
+.roms-filter-container .roms-filter-form .videoconsole-filter-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 .videoconsole-filter-grid {
   display: flex;
+  align-items: center;
   flex-direction: row;
   flex-wrap: wrap;
 }

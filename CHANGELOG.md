@@ -13,6 +13,10 @@
 
 ## Unreleased
 
+### Changed
+
+-   Filters css adjust.
+
 ## [1.0] 28-11-2023
 
 ### Added
