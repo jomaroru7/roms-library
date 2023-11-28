@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Videoconsole, OnSetVideoconsole } from '../../types';
 import { VideoconsoleFilter } from "..";
 
@@ -7,39 +7,39 @@ interface VideoconsoleFilterGridProps {
     onSetVideoconsole: OnSetVideoconsole,
 }
 
-export const VideoconsoleFilterGrid: React.FC<VideoconsoleFilterGridProps> = ({ arrayVideoconsoles }, onSetVideoconsole) => {
+export const VideoconsoleFilterGrid: React.FC<VideoconsoleFilterGridProps> = ({ arrayVideoconsoles , onSetVideoconsole}) => {
 
-    const [videoconsolesSelected, setVideoconsolesSelected] = useState<Videoconsole[]>(arrayVideoconsoles)
-    
-    const isVideoconsoleSelected = (videoconsoleId: number) => {
-        return videoconsolesSelected.some((videconsole) => ( videoconsoleId===videconsole.id));
-    }
+    const [videoconsolesSelected, setVideoconsolesSelected] = useState<Videoconsole[]>(arrayVideoconsoles);
 
     const createNewVideoconsolesArrayWithoutElement = (videoconsoleToRemove: Videoconsole)=>{
-        return videoconsolesSelected.filter((videoconsole) => (videoconsole !== videoconsoleToRemove))
+        return videoconsolesSelected.filter((videoconsole) => (videoconsole.id !== videoconsoleToRemove.id))
     }
 
     const onSwitchVideoconsolesSelected = (videoconsole: Videoconsole, isConsoleFiltered: boolean) => {
-        if (isConsoleFiltered && !isVideoconsoleSelected(videoconsole.id)){
+        if (isConsoleFiltered){
             setVideoconsolesSelected([videoconsole, ...videoconsolesSelected])
-        }
-
-        if (!isConsoleFiltered && isVideoconsoleSelected(videoconsole.id)){
+        }else{
             setVideoconsolesSelected(createNewVideoconsolesArrayWithoutElement(videoconsole))
         }
-        
-        onSetVideoconsole(videoconsolesSelected);
     }
+
+    useEffect(() => {
+        onSetVideoconsole(videoconsolesSelected);
+    }, [videoconsolesSelected]) 
+
+    useEffect(() => {
+        setVideoconsolesSelected(arrayVideoconsoles);
+        onSetVideoconsole(arrayVideoconsoles);
+    }, [arrayVideoconsoles]) 
 
     return (
         <div>
             {
                 arrayVideoconsoles.map((videoconsole) => {
                     return (
-                        <VideoconsoleFilter key={videoconsole.id} videoconsole={videoconsole} onSwitchVideoconsolesSelected={onSwitchVideoconsolesSelected}/>
+                        <VideoconsoleFilter key={videoconsole.id} videoconsole={videoconsole} onSwitchVideoconsolesSelected={ onSwitchVideoconsolesSelected }/>
                     )
-                }
-                )
+                })
             }
         </div>
     )

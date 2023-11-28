@@ -4,35 +4,31 @@ import { getConsoles } from "../helpers";
 
 export const useFilterRoms = () => {
     const [term, setTerm] = useState<string>();
-    const [videoconsole, setVideoconsole] = useState<string>();
+    const [videoconsoles, setVideoconsoles] = useState<Videoconsole[]>();
     const [page, setPage] = useState<number>();
     const [arrayVideoconsoles, setArrayVideoconsoles] = useState<Videoconsole[]>([]);
 
-    const setFilters = ({ term, videoconsole, page }: getRomsArgs) => {
+    const setFilters = ({ term, videoconsoles, page }: getRomsArgs) => {
         term && setTerm(term);
-        videoconsole && setVideoconsole(videoconsole);
+        videoconsoles && setVideoconsoles(videoconsoles);
         page && setPage(page);
     }
 
     const resetFilters = (filters?: string[]) => {
         (!filters || filters.find((filter) => 'term' === filter)) && setTerm(undefined);
-        (!filters || filters.find((filter) => 'videoconsole' === filter)) && setVideoconsole(undefined);
+        (!filters || filters.find((filter) => 'videoconsole' === filter)) && setVideoconsoles(undefined);
         (!filters || filters.find((filter) => 'page' === filter)) && setPage(undefined);
     }
 
-    const getNewArrayVideoconsoles = async() => {
-        const arrayNewVideoconsoles = await getConsoles();
-        setArrayVideoconsoles(arrayNewVideoconsoles);
-    }
-  
-    useEffect(() => {
-        getNewArrayVideoconsoles();
-    }, []);
+    useEffect(()=>{
+        getConsoles()
+            .then( (videoconsoles) => setArrayVideoconsoles(videoconsoles));
+    }, [])
 
     return (
         {
             term,
-            videoconsole,
+            videoconsoles,
             page,
             arrayVideoconsoles,
             setFilters,

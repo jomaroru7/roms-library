@@ -1,5 +1,5 @@
-import { FormEvent } from "react";
-import { GetNewRoms } from "../../types"
+import { FormEvent, useEffect } from "react";
+import { GetNewRoms, Videoconsole } from "../../types"
 import { VideoconsoleFilterGrid } from "../";
 import { useFilterRoms } from "../../hooks";
 
@@ -8,10 +8,10 @@ interface RomsFilterProps {
 }
 
 export const RomsFilter: React.FC<RomsFilterProps> = ({ getNewRoms }) => {
-    const { term, videoconsole, page, arrayVideoconsoles,  setFilters, resetFilters } = useFilterRoms();
+    const { term, videoconsoles, page, arrayVideoconsoles,  setFilters, resetFilters } = useFilterRoms();
 
-    const onSetVideoconsole = (videoconsole: string) => {
-        setFilters({ videoconsole })
+    const onSetVideoconsole = (videoconsoles: Videoconsole[]) => {
+        setFilters({ videoconsoles })
     }
     
     const onSetTerm = (term: string) => {
@@ -26,7 +26,7 @@ export const RomsFilter: React.FC<RomsFilterProps> = ({ getNewRoms }) => {
         event.preventDefault();
         const args = {
             term,
-            videoconsole,
+            videoconsoles,
             page
         };
         getNewRoms(args);
@@ -34,7 +34,7 @@ export const RomsFilter: React.FC<RomsFilterProps> = ({ getNewRoms }) => {
 
     return (
         <form onSubmit={onSubmit}>
-            <VideoconsoleFilterGrid arrayVideoconsoles={arrayVideoconsoles} onSetVideoconsole={(value) => onSetVideoconsole(value)} />
+            <VideoconsoleFilterGrid arrayVideoconsoles={arrayVideoconsoles} onSetVideoconsole={onSetVideoconsole} />
             <input type="submit" value="Search" />
         </form>
     )

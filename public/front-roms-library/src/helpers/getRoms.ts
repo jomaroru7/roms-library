@@ -1,9 +1,9 @@
 import { Videoconsole, PostRom, getRomsArgs } from '../types';
-import { getConsoles, getApiHost} from "./";
+import { getConsoles, getApiHost } from "./";
 
-export const getRoms = async ({term: search, page, videoconsole}: getRomsArgs = {}) => {
-    const consoles: Videoconsole[] = await getArrayConsolesImage();
-    const consoleFilter: number | undefined = videoconsole ? getConsoleIdByName(videoconsole, consoles) : undefined;
+export const getRoms = async ({ term: search, page, videoconsoles }: getRomsArgs = {}) => {
+    const consoles: Videoconsole[] = await getArrayConsoles();
+    const consoleFilter: string | undefined = videoconsoles ? getConsolesIdsForQuery(videoconsoles, consoles) : undefined;
     const parameters = '?acf_format=standard' +
         (page ? '&page=' + page : '') +
         (consoleFilter ? '&console=' + consoleFilter : '') +
@@ -25,9 +25,8 @@ export const getRoms = async ({term: search, page, videoconsole}: getRomsArgs = 
     return roms;
 }
 
-const getArrayConsolesImage = async () => {
-    const consoles = await getConsoles();
-    return consoles;
+const getArrayConsoles = async () => {
+    return await getConsoles();
 }
 
 const getConsoleById = (id: number, arrayConsoles: Videoconsole[]) => {
@@ -35,7 +34,23 @@ const getConsoleById = (id: number, arrayConsoles: Videoconsole[]) => {
     return videoconsole?.image;
 }
 
+const getConsolesIdsForQuery = (consoles: Videoconsole[], arrayConsoles: Videoconsole[]) => {
+    let arrayIds: number[] = [];
+    let ids: string = '';
+
+    consoles.forEach((videoconsole) => {
+        const videoconsoleId = getConsoleIdByName(videoconsole.name, arrayConsoles);
+        'number' === typeof (videoconsoleId) && arrayIds.push(videoconsoleId)
+    })
+
+    arrayIds.forEach((id, index) => {
+        ids += index === 0 ? id.toString() : ',' + id.toString();
+    })
+
+    return ids !== '' ? ids : undefined;
+}
+
 const getConsoleIdByName = (consoleName: string, arrayConsoles: Videoconsole[]) => {
     const videoconsole = arrayConsoles.find((videoconsole) => consoleName.toLowerCase() === videoconsole.name.toLowerCase());
-    return videoconsole?.id;
+    return videoconsole ? videoconsole.id : undefined;
 }

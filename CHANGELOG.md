@@ -15,6 +15,7 @@
 
 ### Added
 
+-   Filter by videoconsole functionality.
 -   Refresh roms functionality.
 -   React project.
 -   Default logo for gba and nds.
