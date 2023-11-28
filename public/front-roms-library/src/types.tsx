@@ -1,5 +1,13 @@
 export type OnNewRom = (newRom: Rom) => void;
+export type GetNewRoms = (getRomsArgs: getRomsArgs) => void;
+export type OnSetVideoconsole = (videoconsole: Videoconsole[]) => void;
+export type OnSwitchVideoconsolesSelected = (videoconsole: Videoconsole, isConsoleFiltered: boolean) => void;
 
+export interface getRomsArgs {
+    term?: string,
+    page?: number, 
+    videoconsoles?: Videoconsole[]
+}
 export interface PostRom {
     acf: {
         rom_download_link : string,
@@ -39,7 +47,7 @@ export interface Rom {
     image: string,
 }
 
-export interface Console {
+export interface Videoconsole {
     image?: string | false,
     description: string,
     id: number,

@@ -1,5 +1,4 @@
-import { generateRandomColor } from '../../helpers/generateRandomColor';
-import { sanitizeString } from '../../helpers/sanitizeString';
+import { generateRandomColor, sanitizeString} from '../../helpers';
 interface RomItemProps {
   id: number
   title: string,

@@ -13,8 +13,12 @@
 
 ## Unreleased
 
+## [1.0] 28-11-2023
+
 ### Added
 
+-   Css for filters.
+-   Filter by videoconsole functionality.
 -   Refresh roms functionality.
 -   React project.
 -   Default logo for gba and nds.
