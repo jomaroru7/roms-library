@@ -9,15 +9,21 @@ interface VideoconsoleFilterProps {
 export const VideoconsoleFilter: React.FC<VideoconsoleFilterProps> = ({ videoconsole, onSwitchVideoconsolesSelected}) => {
 
     const [inputChecked, setInputChecked] = useState<boolean>(true);
-
+    const [classnameInput, setClassnameInput] = useState<string>('checkbox-card');
+    
     const onInputChange = () => {
         setInputChecked(!inputChecked);
         onSwitchVideoconsolesSelected(videoconsole, !inputChecked);
+        if(inputChecked){
+            setClassnameInput('checkbox-card checkbox-unchecked')
+        }else{
+            setClassnameInput('checkbox-card')
+        }
     }
 
     return (
-        <>
-            <label htmlFor={videoconsole.slug}>{videoconsole.name}</label>
+        <div className={classnameInput}>
+            <label className="checkbox-span" htmlFor={videoconsole.slug}>{videoconsole.name}</label>
             <input
                 type="checkbox"
                 name={videoconsole.name}
@@ -25,6 +31,6 @@ export const VideoconsoleFilter: React.FC<VideoconsoleFilterProps> = ({ videocon
                 onChange={onInputChange}
                 checked={inputChecked}
             />
-        </>
+        </div>
     )
 }

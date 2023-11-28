@@ -33,9 +33,12 @@ export const RomsFilter: React.FC<RomsFilterProps> = ({ getNewRoms }) => {
     }
 
     return (
-        <form onSubmit={onSubmit}>
-            <VideoconsoleFilterGrid arrayVideoconsoles={arrayVideoconsoles} onSetVideoconsole={onSetVideoconsole} />
-            <input type="submit" value="Search" />
-        </form>
+        <div className="roms-filter-container">
+            <form className="roms-filter-form" onSubmit={onSubmit}>
+                <VideoconsoleFilterGrid arrayVideoconsoles={arrayVideoconsoles} onSetVideoconsole={onSetVideoconsole} />
+                <input className="roms-filter-submit" type="submit" value="Search" />
+            </form>
+        </div>
+        
     )
 }

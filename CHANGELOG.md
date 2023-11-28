@@ -15,6 +15,7 @@
 
 ### Added
 
+-   Css for filters.
 -   Filter by videoconsole functionality.
 -   Refresh roms functionality.
 -   React project.

@@ -33,7 +33,7 @@ export const VideoconsoleFilterGrid: React.FC<VideoconsoleFilterGridProps> = ({ 
     }, [arrayVideoconsoles]) 
 
     return (
-        <div>
+        <div className="videoconsole-filter-grid">
             {
                 arrayVideoconsoles.map((videoconsole) => {
                     return (
