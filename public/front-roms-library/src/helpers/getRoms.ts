@@ -1,15 +1,8 @@
 import { Videoconsole, PostRom, getRomsArgs } from '../types';
 import { getApiHost } from "./";
 
-export const getRoms = async ({ videoconsoles, termFilter: searchFilter, pageFilter, videoconsolesFilter }: getRomsArgs = {videoconsoles: []}) => {
-    const consoleFilter: string | undefined = videoconsolesFilter ? getConsolesIdsForQuery(videoconsolesFilter, videoconsoles) : undefined;
-    const parameters = '?acf_format=standard' +
-        (pageFilter ? '&page=' + pageFilter : '') +
-        (consoleFilter ? '&console=' + consoleFilter : '') +
-        (searchFilter ? '&search=' + searchFilter : '');
-    const url = getApiHost() + '/wp-json/wp/v2/rom/' + parameters;
-    const resp = await fetch(url);
-    const data = await resp.json();
+export const getRoms = async (response: Response, videoconsoles: Videoconsole[]) => {
+    const data = await response.json();
     const roms = data.map((rom: PostRom) => {
         const romConsoleId = rom.console[0];
         const romConsoleImage = false !== rom.acf.rom_image ? rom.acf.rom_image : getConsoleImageById(romConsoleId, videoconsoles);
@@ -22,6 +15,19 @@ export const getRoms = async ({ videoconsoles, termFilter: searchFilter, pageFil
         }
     })
     return roms;
+}
+
+export const getRomsResponse = async ({ videoconsoles, termFilter, pageFilter, videoconsolesFilter }: getRomsArgs = {videoconsoles: []}) => {
+    const consoleFilter: string | undefined = videoconsolesFilter ? getConsolesIdsForQuery(videoconsolesFilter, videoconsoles) : undefined;
+    const parameters = '?acf_format=standard' +
+        (pageFilter ? '&page=' + pageFilter : '') +
+        (consoleFilter ? '&console=' + consoleFilter : '') +
+        (termFilter ? '&search=' + termFilter : '');
+    const url = getApiHost() + '/wp-json/wp/v2/rom/' + parameters;
+    const resp = fetch(url)
+        .then((response) => {return response})
+        .catch((error) => {throw error});
+    return resp;
 }
 
 const getConsoleImageById = (id: number, arrayConsoles: Videoconsole[]) => {

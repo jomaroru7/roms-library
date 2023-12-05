@@ -14,6 +14,8 @@
 ## Unreleased
 
 ### Changed
+
+-   Extracted getRomsResponse to reduce API calls.
 -   Reformed getRoms to reduce getConsoles calls.
 -   Filters css adjust.
 
