@@ -13,11 +13,6 @@ export const RomsLibrary = () => {
   //   setRoms([...roms, newRom]);
   // }
 
-  const onChangePage = (newPage: number) => {
-    setFilters({termFilter, videoconsolesFilter, pageFilter: newPage})
-    getNewRoms({videoconsoles, pageFilter, videoconsolesFilter, termFilter})
-  }
-
   return (
     <>
       {/* <AddRom
@@ -31,7 +26,7 @@ export const RomsLibrary = () => {
 
       <RomsGrid roms={roms} />
 
-      <RomsPagination getNewRoms={getNewRoms} totalPages={totalPages} videoconsoles={videoconsoles} onChangePage={onChangePage} />
+      <RomsPagination getNewRoms={getNewRoms} totalPages={totalPages} videoconsoles={videoconsoles} />
 
     </>
   );

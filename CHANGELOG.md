@@ -13,6 +13,8 @@
 
 ## Unreleased
 
+## [1.1] 07-12-2023
+
 ### Added
 
 -   Pagination

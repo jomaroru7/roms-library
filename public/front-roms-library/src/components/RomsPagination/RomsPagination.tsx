@@ -1,14 +1,13 @@
 import { FormEvent, useEffect, useState } from "react";
-import { GetNewRoms, OnChangePage, Videoconsole } from "../../types"
+import { GetNewRoms, Videoconsole } from "../../types"
 
 interface RomsPaginationProps {
   getNewRoms: GetNewRoms,
   totalPages: number,
   videoconsoles: Videoconsole[],
-  onChangePage: OnChangePage
 }
 
-export const RomsPagination: React.FC<RomsPaginationProps> = ({ getNewRoms, totalPages, videoconsoles, onChangePage }) => {
+export const RomsPagination: React.FC<RomsPaginationProps> = ({ getNewRoms, totalPages, videoconsoles }) => {
 
   const [pages, setPages] = useState<[]>([]);
 
