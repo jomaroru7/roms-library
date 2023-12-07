@@ -1,19 +1,24 @@
 import { Videoconsole, PostRom, getRomsArgs } from '../types';
-import { getConsoles, getApiHost } from "./";
+import { getApiHost } from "./";
 
-export const getRoms = async ({ term: search, page, videoconsoles }: getRomsArgs = {}) => {
-    const consoles: Videoconsole[] = await getArrayConsoles();
-    const consoleFilter: string | undefined = videoconsoles ? getConsolesIdsForQuery(videoconsoles, consoles) : undefined;
+export const getRomsResponse = async ({ videoconsoles, termFilter, pageFilter, videoconsolesFilter }: getRomsArgs = {videoconsoles: []}) => {
+    const consoleFilter: string | undefined = videoconsolesFilter ? getConsolesIdsForQuery(videoconsolesFilter, videoconsoles) : undefined;
     const parameters = '?acf_format=standard' +
-        (page ? '&page=' + page : '') +
+        (pageFilter ? '&page=' + pageFilter : '') +
         (consoleFilter ? '&console=' + consoleFilter : '') +
-        (search ? '&search=' + search : '');
+        (termFilter ? '&search=' + termFilter : '');
     const url = getApiHost() + '/wp-json/wp/v2/rom/' + parameters;
-    const resp = await fetch(url);
-    const data = await resp.json();
+    const resp = fetch(url)
+        .then((response) => {return response})
+        .catch((error) => {throw error});
+    return resp;
+}
+
+export const getRoms = async (response: Response, videoconsoles: Videoconsole[]) => {
+    const data = await response.json();
     const roms = data.map((rom: PostRom) => {
         const romConsoleId = rom.console[0];
-        const romConsoleImage = false !== rom.acf.rom_image ? rom.acf.rom_image : getConsoleById(romConsoleId, consoles);
+        const romConsoleImage = false !== rom.acf.rom_image ? rom.acf.rom_image : getConsoleImageById(romConsoleId, videoconsoles);
         return {
             id: rom.id,
             title: rom.title.rendered,
@@ -25,11 +30,15 @@ export const getRoms = async ({ term: search, page, videoconsoles }: getRomsArgs
     return roms;
 }
 
-const getArrayConsoles = async () => {
-    return await getConsoles();
+export const getTotalPages = async (response: Response) => {
+    return response.headers.get('X-WP-TotalPages') || 1;
 }
 
-const getConsoleById = (id: number, arrayConsoles: Videoconsole[]) => {
+export const getCurrentPage = async (response: Response) => {
+    return response.headers.get('X-WP-TotalPages') || 1;
+}
+
+const getConsoleImageById = (id: number, arrayConsoles: Videoconsole[]) => {
     const videoconsole = arrayConsoles.find((videoconsole) => id === videoconsole.id);
     return videoconsole?.image;
 }

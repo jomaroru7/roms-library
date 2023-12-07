@@ -1,0 +1,23 @@
+.pagination-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    .pagination-list{
+        padding-inline-start: 0;
+        list-style: none;
+        display: flex;
+        flex-direction: row;
+
+        .pagination-number{
+            color: blue;
+            margin: 0 3px;
+            cursor: pointer;
+            &.page-selected{
+                font-size: 1.1rem;
+                color: black;
+                cursor: default;
+            }
+        }
+
+    }
+}

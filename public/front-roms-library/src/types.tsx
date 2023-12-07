@@ -1,12 +1,21 @@
 export type OnNewRom = (newRom: Rom) => void;
 export type GetNewRoms = (getRomsArgs: getRomsArgs) => void;
+export type SetFilters = (romsFilters: RomsFilters ) => void;
 export type OnSetVideoconsole = (videoconsole: Videoconsole[]) => void;
 export type OnSwitchVideoconsolesSelected = (videoconsole: Videoconsole, isConsoleFiltered: boolean) => void;
+export type OnChangePage = (newPage: number) => void;
 
 export interface getRomsArgs {
-    term?: string,
-    page?: number, 
-    videoconsoles?: Videoconsole[]
+    videoconsoles: Videoconsole[],  
+    termFilter?: string,
+    pageFilter?: number, 
+    videoconsolesFilter?: Videoconsole[]
+}
+
+export interface RomsFilters {
+    termFilter?: string,
+    pageFilter?: number, 
+    videoconsolesFilter?: Videoconsole[]
 }
 export interface PostRom {
     acf: {

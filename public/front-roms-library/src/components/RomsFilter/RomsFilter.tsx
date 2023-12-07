@@ -1,33 +1,30 @@
-import { FormEvent, useEffect } from "react";
-import { GetNewRoms, Videoconsole } from "../../types"
+import { FormEvent } from "react";
+import { GetNewRoms, SetFilters, Videoconsole } from "../../types"
 import { VideoconsoleFilterGrid } from "../";
-import { useFilterRoms } from "../../hooks";
-
 interface RomsFilterProps {
     getNewRoms: GetNewRoms,
+    termFilter?: string,
+    videoconsolesFilter?: Videoconsole[],
+    videoconsoles: Videoconsole[],
+    setFilters: SetFilters,
 }
 
-export const RomsFilter: React.FC<RomsFilterProps> = ({ getNewRoms }) => {
-    const { term, videoconsoles, page, arrayVideoconsoles,  setFilters, resetFilters } = useFilterRoms();
+export const RomsFilter: React.FC<RomsFilterProps> = ({ getNewRoms, termFilter, videoconsolesFilter, videoconsoles, setFilters }) => {
 
-    const onSetVideoconsole = (videoconsoles: Videoconsole[]) => {
-        setFilters({ videoconsoles })
+    const onSetVideoconsole = (arrayVideoconsoles: Videoconsole[]) => {
+        setFilters({ videoconsolesFilter: arrayVideoconsoles })
     }
     
     const onSetTerm = (term: string) => {
-        setFilters({ term })
-    }
-
-    const onSetPage = (page: number) => {
-        setFilters({ page })
+        setFilters({ termFilter: term })
     }
 
     const onSubmit = (event: FormEvent) => {
         event.preventDefault();
         const args = {
-            term,
             videoconsoles,
-            page
+            termFilter,
+            videoconsolesFilter
         };
         getNewRoms(args);
     }
@@ -35,7 +32,10 @@ export const RomsFilter: React.FC<RomsFilterProps> = ({ getNewRoms }) => {
     return (
         <div className="roms-filter-container">
             <form className="roms-filter-form" onSubmit={onSubmit}>
-                <VideoconsoleFilterGrid arrayVideoconsoles={arrayVideoconsoles} onSetVideoconsole={onSetVideoconsole} />
+                <div className="videoconsole-filter-container">
+                    <h2 className="videoconsole-title">Videoconsole</h2>
+                    <VideoconsoleFilterGrid arrayVideoconsoles={videoconsoles} onSetVideoconsole={onSetVideoconsole} />
+                </div>
                 <input className="roms-filter-submit" type="submit" value="Search" />
             </form>
         </div>

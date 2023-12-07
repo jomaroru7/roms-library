@@ -13,6 +13,18 @@
 
 ## Unreleased
 
+## [1.1] 07-12-2023
+
+### Added
+
+-   Pagination
+
+### Changed
+
+-   Extracted getRomsResponse to reduce API calls.
+-   Reformed getRoms to reduce getConsoles calls.
+-   Filters css adjust.
+
 ## [1.0] 28-11-2023
 
 ### Added
