@@ -335,3 +335,24 @@ body {
     --rotate:360deg;
   }
 }
+.pagination-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.pagination-container .pagination-list {
+  padding-inline-start: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+}
+.pagination-container .pagination-list .pagination-number {
+  color: blue;
+  margin: 0 3px;
+  cursor: pointer;
+}
+.pagination-container .pagination-list .pagination-number.page-selected {
+  font-size: 1.1rem;
+  color: black;
+  cursor: default;
+}

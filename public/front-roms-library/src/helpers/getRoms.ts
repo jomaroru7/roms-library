@@ -1,6 +1,19 @@
 import { Videoconsole, PostRom, getRomsArgs } from '../types';
 import { getApiHost } from "./";
 
+export const getRomsResponse = async ({ videoconsoles, termFilter, pageFilter, videoconsolesFilter }: getRomsArgs = {videoconsoles: []}) => {
+    const consoleFilter: string | undefined = videoconsolesFilter ? getConsolesIdsForQuery(videoconsolesFilter, videoconsoles) : undefined;
+    const parameters = '?acf_format=standard' +
+        (pageFilter ? '&page=' + pageFilter : '') +
+        (consoleFilter ? '&console=' + consoleFilter : '') +
+        (termFilter ? '&search=' + termFilter : '');
+    const url = getApiHost() + '/wp-json/wp/v2/rom/' + parameters;
+    const resp = fetch(url)
+        .then((response) => {return response})
+        .catch((error) => {throw error});
+    return resp;
+}
+
 export const getRoms = async (response: Response, videoconsoles: Videoconsole[]) => {
     const data = await response.json();
     const roms = data.map((rom: PostRom) => {
@@ -17,17 +30,12 @@ export const getRoms = async (response: Response, videoconsoles: Videoconsole[])
     return roms;
 }
 
-export const getRomsResponse = async ({ videoconsoles, termFilter, pageFilter, videoconsolesFilter }: getRomsArgs = {videoconsoles: []}) => {
-    const consoleFilter: string | undefined = videoconsolesFilter ? getConsolesIdsForQuery(videoconsolesFilter, videoconsoles) : undefined;
-    const parameters = '?acf_format=standard' +
-        (pageFilter ? '&page=' + pageFilter : '') +
-        (consoleFilter ? '&console=' + consoleFilter : '') +
-        (termFilter ? '&search=' + termFilter : '');
-    const url = getApiHost() + '/wp-json/wp/v2/rom/' + parameters;
-    const resp = fetch(url)
-        .then((response) => {return response})
-        .catch((error) => {throw error});
-    return resp;
+export const getTotalPages = async (response: Response) => {
+    return response.headers.get('X-WP-TotalPages') || 1;
+}
+
+export const getCurrentPage = async (response: Response) => {
+    return response.headers.get('X-WP-TotalPages') || 1;
 }
 
 const getConsoleImageById = (id: number, arrayConsoles: Videoconsole[]) => {

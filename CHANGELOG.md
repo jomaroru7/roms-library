@@ -13,6 +13,10 @@
 
 ## Unreleased
 
+### Added
+
+-   Pagination
+
 ### Changed
 
 -   Extracted getRomsResponse to reduce API calls.

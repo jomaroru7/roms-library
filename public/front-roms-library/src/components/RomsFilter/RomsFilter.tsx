@@ -1,14 +1,15 @@
 import { FormEvent } from "react";
-import { GetNewRoms, Videoconsole } from "../../types"
+import { GetNewRoms, SetFilters, Videoconsole } from "../../types"
 import { VideoconsoleFilterGrid } from "../";
-import { useFilterRoms } from "../../hooks";
-
 interface RomsFilterProps {
     getNewRoms: GetNewRoms,
+    termFilter?: string,
+    videoconsolesFilter?: Videoconsole[],
+    videoconsoles: Videoconsole[],
+    setFilters: SetFilters,
 }
 
-export const RomsFilter: React.FC<RomsFilterProps> = ({ getNewRoms }) => {
-    const { termFilter, videoconsolesFilter, pageFilter, videoconsoles,  setFilters, resetFilters } = useFilterRoms();
+export const RomsFilter: React.FC<RomsFilterProps> = ({ getNewRoms, termFilter, videoconsolesFilter, videoconsoles, setFilters }) => {
 
     const onSetVideoconsole = (arrayVideoconsoles: Videoconsole[]) => {
         setFilters({ videoconsolesFilter: arrayVideoconsoles })
@@ -18,17 +19,12 @@ export const RomsFilter: React.FC<RomsFilterProps> = ({ getNewRoms }) => {
         setFilters({ termFilter: term })
     }
 
-    const onSetPage = (page: number) => {
-        setFilters({ pageFilter: page })
-    }
-
     const onSubmit = (event: FormEvent) => {
         event.preventDefault();
         const args = {
             videoconsoles,
             termFilter,
-            videoconsolesFilter,
-            pageFilter
+            videoconsolesFilter
         };
         getNewRoms(args);
     }
