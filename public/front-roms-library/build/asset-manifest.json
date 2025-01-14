@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/wp-content/plugins/roms-library/public/front-roms-library/build/static/css/main.59c07f11.css",
+    "main.css": "/wp-content/plugins/roms-library/public/front-roms-library/build/static/css/main.dc9b82e5.css",
     "main.js": "/wp-content/plugins/roms-library/public/front-roms-library/build/static/js/main.5f1ee096.js",
     "index.html": "/wp-content/plugins/roms-library/public/front-roms-library/build/index.html",
-    "main.59c07f11.css.map": "/wp-content/plugins/roms-library/public/front-roms-library/build/static/css/main.59c07f11.css.map",
+    "main.dc9b82e5.css.map": "/wp-content/plugins/roms-library/public/front-roms-library/build/static/css/main.dc9b82e5.css.map",
     "main.5f1ee096.js.map": "/wp-content/plugins/roms-library/public/front-roms-library/build/static/js/main.5f1ee096.js.map"
   },
   "entrypoints": [
-    "static/css/main.59c07f11.css",
+    "static/css/main.dc9b82e5.css",
     "static/js/main.5f1ee096.js"
   ]
 }
